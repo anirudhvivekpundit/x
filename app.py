@@ -110,28 +110,23 @@ def logindata():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        username = request.form.get("username")
-        email = request.form.get("email")
-        password = request.form.get("password")
+        name = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+        hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
 
-        if not username or not email or not password:
-            return "All fields are required!", 400
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
-        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        # ✅ Insert new user
+        cursor.execute("INSERT INTO users (username, email, password_hash) VALUES (%s, %s, %s)", 
+                   (name, email, hashed_password))
+        mysql.connection.commit()
+        cursor.close()
 
-        cur = mysql.connection.cursor()
     
-        cur.execute("SELECT email FROM users WHERE email = %s", (email,))
-        existing_user = cur.fetchone()
-    if existing_user:
-        cur.close()
-        return "Email already exists. Try logging in.", 409
+        return redirect(url_for("login"))  # Redirect after success to prevent resubmission
 
-    # Insert new user
-    cur.execute("INSERT INTO users (username, email, password_hash) VALUES (%s, %s, %s)",
-                (username, email, hashed_password))
-    mysql.connection.commit()
-    return redirect(url_for("login"))
+    return render_template("signup.html")
 
         
       # Redirect after success to prevent resubmission
