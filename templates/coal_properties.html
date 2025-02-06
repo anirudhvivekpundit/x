@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCoke-Coal Properties</title>
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+
+       
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 24px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+          }
+          
+          button {
+            background-color: #150d81;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-left: 27%;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-table;
+            margin-bottom: 20px;
+             
+          }
+          
+          button:hover {
+            background-color: #2a32a8;
+          }
+          
+          
+          button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+          }
+          
+          /* Table Styles */
+          #coalTable {
+            width: 90%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+          }
+          
+          #coalTable th, #coalTable td {
+            padding: 12px;
+            text-align: center;
+            min-width: 100px;
+            border: 1px solid #ddd;
+          }
+          
+          #coalTable th {
+            background-color: #ffffff;
+            color: rgb(28, 27, 65);
+          }
+          
+          #coalTable tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+          }
+          
+          /* Popup Form Styles */
+          .form-popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1; /* Sit on top */
+            left: 0;
+            margin-left: 25%;
+            top: 10%;
+            width: 50%;
+            height: 80%;
+            overflow: auto;
+            border-radius: 8px;
+            background-color: rgb(252, 252, 252);
+          }
+          
+          .form-popup form {
+            display: flex;
+            flex-direction: column;
+          }
+          
+          .form-popup h2 {
+            text-align: center;
+            color: #333;
+            font-size: 20px;
+            
+            margin-bottom: 20px;
+          }
+          
+          /* Input Fields */
+          input[type="number"],
+          input[type="text"],
+          select {
+            padding: 10px;
+            width: 80%;
+            margin: 8px 0;
+            margin-left: 40px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+          }
+          
+          input[type="number"]:focus,
+          input[type="text"]:focus,
+          select:focus {
+            border-color: #4CAF50;
+            outline: none;
+          }
+          
+          /* Labels */
+          label {
+            font-weight: bold;
+            margin-left: 40px;
+            margin-bottom: 5px;
+            color: #333;
+          }
+          
+          /* Buttons in Forms */
+          .form-popup button {
+            margin-top: 10px;
+            width: 30%;
+            margin-left: 40px;
+          }
+          
+          #submitModifiedData {
+            background-color: #150d81;
+          }
+          
+          #submitModifiedData:hover {
+            background-color: #2a32a8;
+          }
+          .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            font-weight: bold;
+            color: red;
+            cursor: pointer;
+          }
+          
+          
+          /* Responsive Styles */
+          @media (max-width: 768px) {
+            .form-popup {
+              width: 90%;
+              padding: 15px;
+            }
+          
+            #coalTable {
+              font-size: 12px;
+            }
+          
+            #coalTable th, #coalTable td {
+              padding: 8px;
+            }
+          
+            button {
+              font-size: 14px;
+            }
+          }
+    </style>
+</head>
+<body>
+    <header>
+      <nav class="navbar">
+        <div class="logo-left">
+            <img src="static/images/Abhitech.jpeg" alt="Abhitech Logo" class="logo-img-left">
+        </div>
+        <ul class="navbar-links">
+            <li><h1>SmartCoke</h1></li>
+            <li><a href="coal_properties.html">COAL PROPERTIES</a></li>
+            <li><a href="min-max.html">MIN-MAX WEIGHTAGE</a></li>
+            <li><a href="cost.html">COST AI</a></li>
+            <li><a href="trainingpage.html">TRAINING</a></li>
+            <li><a href="index.html">HOME</a></li>
+            
+        </ul>
+        <div class="logo-right">
+            <img src="static/images/Industantra.jpg" alt="Right Logo" class="logo-img-right">
+        </div>
+    </nav>
+       
+     
+    </header>
+<body>
+    <h2>Coal Properties</h2>
+  
+        <button id="addCoalDataButton">Add Coal Data</button>
+        <button id="modifyCoalDataButton">Modify Coal Data</button>
+    
+
+  <table id="coalTable">
+    <thead>
+      <tr>
+        <th>Index</th>
+        <th>Coal</th>
+        <th>Ash (%)</th>
+        <th>Volatile Matter (%)</th>
+        <th>Moisture (%)</th>
+        <th>Max. Contraction</th>
+        <th>Max. Expansion</th>
+        <th>Max. fluidity (ddpm)</th>
+        <th>MMR</th>
+        <th>HGI</th>
+        <th>Softening temperature (°C)</th>
+        <th>Resolidification temp range Min (°C)</th>
+        <th>Resolidification temp range Max (°C)</th>
+        <th>Plastic range (°C)</th>
+        <th>Sulphur (%)</th>
+        <th>Phosphorous (%)</th>
+        <th>CSN</th>
+        <th>Cost per Ton (Rs.)</th>
+        <th>Last Modified Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data rows will be inserted here by JavaScript -->
+    </tbody>
+  </table>
+
+  <div id="modifyCoalFormPopup" class="form-popup">
+    <form id="modifyCoalForm">
+      <h2>Modify Coal Data</h2>
+
+      <span id="closeModifyForm" class="close-btn">&times;</span>
+
+      <label for="selectCoal">Select Coal:</label>
+      <select id="selectCoal" required>
+        <!-- Coal options will be dynamically populated here -->
+      </select><br>
+
+      <label for="coal">Coal:</label><input type="text" id="coal" required><br>
+      <label for="ash">Ash (%):</label><input type="number" id="ash" step="0.001"  required><br>
+      <label for="volatile_matter">Volatile Matter (%):</label><input type="number" id="volatile_matter" step="0.001" required><br>
+      <label for="moisture">Moisture (%):</label><input type="number" id="moisture" step="0.001" required><br>
+      <label for="max_contraction">Max. Contraction:</label><input type="number" id="max_contraction" step="0.001" required><br>
+      <label for="max_expansion">Max. Expansion:</label><input type="number" id="max_expansion" step="0.001" required><br>
+      <label for="max_fluidity">Max. Fluidity (ddpm):</label><input type="number" id="max_fluidity" step="0.001" required><br>
+      <label for="mmr">MMR:</label><input type="number" id="mmr" step="0.001" required><br>
+      <label for="hgi">HGI:</label><input type="number" id="hgi" step="0.001" required><br>
+      <label for="softening_temp">Softening Temperature (°C):</label><input type="number" id="softening_temp" step="0.001" required><br>
+      <label for="resolidification_min">Resolidification Temp Range Min (°C):</label><input type="number" id="resolidification_min" step="0.001" required><br>
+      <label for="resolidification_max">Resolidification Temp Range Max (°C):</label><input type="number" id="resolidification_max" step="0.001" required><br>
+      <label for="plastic_range">Plastic Range (°C):</label><input type="number" id="plastic_range" step="0.001" required><br>
+      <label for="sulphur">Sulphur (%):</label><input type="number" id="sulphur" step="0.001" required><br>
+      <label for="phosphorous">Phosphorous (%):</label><input type="number" id="phosphorous" step="0.001" required><br>
+      <label for="csn">CSN:</label><input type="number" id="csn" step="0.001" required><br>
+      <label for="cost">Cost per Ton (Rs.):</label><input type="number" id="cost" step="0.001" required><br>
+
+      <button type="submit" id="submitModifiedData" disabled>Submit</button>
+    
+    </form>
+  </div>
+
+  <div id="coalFormPopup" class="form-popup">
+    <form id="coalForm">
+        <span id="closeForm" class="close-btn">&times;</span>
+        <h2>Enter Coal Data</h2>
+        <label for="add_coal">Coal:</label><input type="text" id="add_coal" required><br>
+        <label for="add_ash">Ash (%):</label><input type="number" id="add_ash" step="0.01" required><br>
+        <label for="add_volatile_matter">Volatile Matter (%):</label><input type="number" id="add_volatile_matter" step="0.01" required><br>
+        <label for="add_moisture">Moisture (%):</label><input type="number" id="add_moisture" step="0.01" required><br>
+        <label for="add_max_contraction">Max. Contraction:</label><input type="number" id="add_max_contraction" step="0.01" required><br>
+        <label for="add_max_expansion">Max. Expansion:</label><input type="number" id="add_max_expansion" step="0.01" required><br>
+        <label for="add_max_fluidity">Max. Fluidity (ddpm):</label><input type="number" id="add_max_fluidity" step="0.01" required><br>
+        <label for="add_mmr">MMR:</label><input type="number" id="add_mmr" step="0.01" required><br>
+        <label for="add_hgi">HGI:</label><input type="number" id="add_hgi" step="0.01" required><br>
+        <label for="add_softening_temp">Softening Temperature (°C):</label><input type="number" id="add_softening_temp" step="0.01" required><br>
+        <label for="add_resolidification_min">Resolidification Temp Range Min (°C):</label><input type="number" id="add_resolidification_min" step="0.01" required><br>
+        <label for="add_resolidification_max">Resolidification Temp Range Max (°C):</label><input type="number" id="add_resolidification_max" step="0.01" required><br>
+        <label for="add_plastic_range">Plastic Range (°C):</label><input type="number" id="add_plastic_range" step="0.01" required><br>
+        <label for="add_sulphur">Sulphur (%):</label><input type="number" id="add_sulphur" step="0.01" required><br>
+        <label for="add_phosphorous">Phosphorous (%):</label><input type="number" id="add_phosphorous" step="0.01" required><br>
+        <label for="add_csn">CSN:</label><input type="number" id="add_csn" step="0.01" required><br>
+        <label for="add_cost">Cost per Ton (Rs.):</label><input type="number" id="add_cost" step="0.01" required><br>
+        <button type="submit" id="submitnewCoalData">Submit</button>
+    </form>
+</div>
+
+
+<script>
+    let coalData = [];  
+    let coalTypes = []; 
+
+    function fetchCoalData() {
+    fetch('https://abhitech-smartcoke-3aea6d56a2c9.herokuapp.com/get_coal_properties_data')
+        .then(response => response.json())
+        .then(data => {
+        coalData = data.coal_data;
+        coalTypes = data.coal_types;
+        populateCoalDropdown();
+        displayTable();
+        })
+        .catch(err => console.error('Error fetching coal data:', err));
+    }
+
+    
+    function populateCoalDropdown() {
+    const selectCoal = document.getElementById('selectCoal');
+    selectCoal.innerHTML = '';  
+
+  
+    const labelOption = document.createElement('option');
+    labelOption.value = '';  
+    labelOption.textContent = 'Select Coal Type';  
+    labelOption.disabled = true;  
+    labelOption.selected = true;  
+    selectCoal.appendChild(labelOption);
+
+    coalTypes.forEach((coal, index) => {
+        const option = document.createElement('option');
+        option.value = index; 
+        option.textContent = coal;  
+        selectCoal.appendChild(option);
+    });
+    }
+
+    function displayTable() {
+      const tableBody = document.querySelector('#coalTable tbody');
+      tableBody.innerHTML = '';  
+  
+      let rowCount = 1;  // Manually track the row count for valid rows
+  
+      coalData.forEach((row) => {
+          // Skip rows with no valid data
+          if (row.every(cell => cell === '' || cell === null || cell === undefined)) {
+              return;  // If the row has no valid data, skip rendering it
+          }
+  
+          const tr = document.createElement('tr');
+  
+          // Create and append the index only if the row has valid data
+          const tdIndex = document.createElement('td');
+          tdIndex.textContent = rowCount;  // Display the manually tracked row number
+          tr.appendChild(tdIndex);
+  
+          // Iterate through each cell in the row and add them to the table
+          row.forEach((cell) => {
+              const td = document.createElement('td');
+              td.textContent = cell;
+              tr.appendChild(td);
+          });
+  
+          // Append the row to the table body
+          tableBody.appendChild(tr);
+  
+          rowCount++;  // Increment the row count for valid rows
+      });
+  }
+  
+
+
+  document.getElementById('selectCoal').addEventListener('change', () => {
+    
+    const selectedIndex = parseInt(document.getElementById('selectCoal').value, 10);
+
+    if (selectedIndex >= 0 && selectedIndex < coalData.length) {
+      const selectedCoal = coalData[selectedIndex];  
+
+      document.getElementById('coal').value = selectedCoal[0];  
+      document.getElementById('ash').value = selectedCoal[1];
+      document.getElementById('volatile_matter').value = selectedCoal[2];
+      document.getElementById('moisture').value = selectedCoal[3];
+      document.getElementById('max_contraction').value = selectedCoal[4];
+      document.getElementById('max_expansion').value = selectedCoal[5];
+      document.getElementById('max_fluidity').value = selectedCoal[6];
+      document.getElementById('mmr').value = selectedCoal[7];
+      document.getElementById('hgi').value = selectedCoal[8];
+      document.getElementById('softening_temp').value = selectedCoal[9];
+      document.getElementById('resolidification_min').value = selectedCoal[10];
+      document.getElementById('resolidification_max').value = selectedCoal[11];
+      document.getElementById('plastic_range').value = selectedCoal[12];
+      document.getElementById('sulphur').value = selectedCoal[13];
+      document.getElementById('phosphorous').value = selectedCoal[14];
+      document.getElementById('csn').value = selectedCoal[15];
+      document.getElementById('cost').value = selectedCoal[16];
+    }
+  });
+
+  document.getElementById('modifyCoalForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+  // Get the selected index from the dropdown (parsed as integer)
+  const selectedIndex = parseInt(document.getElementById('selectCoal').value, 10);
+
+  const modifiedCoal = [
+    document.getElementById('coal').value,
+    document.getElementById('ash').value,
+    document.getElementById('volatile_matter').value,
+    document.getElementById('moisture').value,
+    document.getElementById('max_contraction').value,
+    document.getElementById('max_expansion').value,
+    document.getElementById('max_fluidity').value,
+    document.getElementById('mmr').value,
+    document.getElementById('hgi').value,
+    document.getElementById('softening_temp').value,
+    document.getElementById('resolidification_min').value,
+    document.getElementById('resolidification_max').value,
+    document.getElementById('plastic_range').value,
+    document.getElementById('sulphur').value,
+    document.getElementById('phosphorous').value,
+    document.getElementById('csn').value,
+    document.getElementById('cost').value,
+    ''
+  ];
+
+  // Send modified data to the server
+  fetch('https://abhitech-smartcoke-3aea6d56a2c9.herokuapp.com/modify_coal_properties', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ index: selectedIndex, data: modifiedCoal }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      fetchCoalData();  // Re-fetch and update the table
+      if (data.message) {
+        alert('Data added successfully!');
+    }
+      document.getElementById('modifyCoalFormPopup').style.display = 'none';  // Close the form
+    resetForm();
+    })
+    .catch(err => console.error('Error modifying coal data:', err));
+});
+
+  fetchCoalData();
+
+
+  document.getElementById('modifyCoalDataButton').addEventListener('click', () => {
+    document.getElementById('modifyCoalFormPopup').style.display = 'block';
+  });
+
+  document.getElementById('closeModifyForm').addEventListener('click', () => {
+    document.getElementById('modifyCoalFormPopup').style.display = 'none';
+  });
+
+    
+    const formFields = [
+      'coal', 'ash', 'volatile_matter', 'moisture', 'max_contraction', 'max_expansion', 
+      'max_fluidity', 'mmr', 'hgi', 'softening_temp', 'resolidification_min', 
+      'resolidification_max', 'plastic_range', 'sulphur', 'phosphorous', 'csn', 'cost'
+    ];
+
+    formFields.forEach(fieldId => {
+      document.getElementById(fieldId).addEventListener('input', () => {
+        const originalValues = coalData[document.getElementById('selectCoal').value];
+        const modifiedValues = formFields.map(id => document.getElementById(id).value);
+
+        
+        const submitButton = document.getElementById('submitModifiedData');
+        submitButton.disabled = !modifiedValues.some((value, index) => value !== originalValues[index + 1]);
+      });
+    }); 
+
+    document.getElementById('coalForm').addEventListener('submit', (e) => {
+        e.preventDefault();  
+    
+        const newCoal = [
+            document.getElementById('add_coal').value,
+            document.getElementById('add_ash').value,
+            document.getElementById('add_volatile_matter').value,
+            document.getElementById('add_moisture').value,
+            document.getElementById('add_max_contraction').value,
+            document.getElementById('add_max_expansion').value,
+            document.getElementById('add_max_fluidity').value,
+            document.getElementById('add_mmr').value,
+            document.getElementById('add_hgi').value,
+            document.getElementById('add_softening_temp').value,
+            document.getElementById('add_resolidification_min').value,
+            document.getElementById('add_resolidification_max').value,
+            document.getElementById('add_plastic_range').value,
+            document.getElementById('add_sulphur').value,
+            document.getElementById('add_phosphorous').value,
+            document.getElementById('add_csn').value,
+            document.getElementById('add_cost').value,
+        ];
+    
+      
+        console.log("Form Data Collected:", newCoal);
+        fetch('https://abhitech-smartcoke-3aea6d56a2c9.herokuapp.com/add_coal_properties', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ data: newCoal }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            fetchCoalData();
+            if (data.message) {
+                alert('Data added successfully!');
+            }
+            document.getElementById('coalFormPopup').style.display = 'none';
+        })
+        .catch(err => {
+            console.error('Error:', err);
+            alert('Error adding data');
+        });
+    });
+      
+
+  
+document.getElementById('addCoalDataButton').addEventListener('click', () => {
+    document.getElementById('coalFormPopup').style.display = 'block';
+  });
+  
+  document.getElementById('closeForm').addEventListener('click', () => {
+    document.getElementById('coalFormPopup').style.display = 'none';
+  });
+
+  function resetForm() {
+    window.location.href = 'coal_properties.html';    
+}
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    // Get all the navigation links
+    const navLinks = document.querySelectorAll('.navbar a');
+
+    
+    navLinks.forEach(link => {
+        if (link.href === window.location.href) {
+            link.classList.add('active'); // Add 'active' class to the link that matches the URL
+        }
+    });
+});
+  
+  
+  </script>
+</body>
+</html>

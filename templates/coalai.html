@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coal AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+.form-container { 
+    width: 80%; 
+    margin: 10px auto; 
+    padding: 20px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    background-color: #f9f9f9; 
+} 
+
+h2,h3 { 
+    text-align: center; 
+    margin-top: 40px; 
+    color: #020947; 
+    font-size: x-large;
+    margin-bottom: 30px;
+} 
+
+.blend, .blend-entry { 
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 10px; 
+    gap: 10px;
+    width: 100%; 
+} 
+
+.blend label, .blend-entry label { 
+    flex: 1; 
+} 
+
+.blend select, .blend-entry select, .blend input, .blend-entry input { 
+    flex: 2; 
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+} 
+.blend .remove-blend-btn, .blend-entry .remove-blend-btn { 
+    flex: 0.5; 
+    background-color: #e74c3c; 
+    color: white; 
+    border: none; 
+    padding: 8px 12px; 
+    cursor: pointer; border-radius: 4px; 
+    transition: background-color 0.3s; 
+} 
+.blend .remove-blend-btn:hover, .blend-entry .remove-blend-btn:hover { 
+    background-color: #c0392b; 
+} 
+
+.add-blend-btn, #addCoalButton { 
+    display: block; 
+    width: 20%; 
+    padding: 10px; 
+    background-color: #020947; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    border-radius: 4px; 
+    text-align: center; 
+    margin-top: 30px;
+    margin-left: 40%;
+    transition: background-color 0.3s; 
+} 
+
+.add-blend-btn:hover, #addCoalButton:hover {
+     background-color: #1e40af; 
+    }  
+    
+.form-section { 
+    width: 100%; 
+    margin: 20px 0; 
+} 
+
+table { 
+    width: 90%; 
+    border-collapse: collapse; 
+    margin-bottom: 20px; 
+    margin-top: 30px;
+    margin-left: 40px;
+} 
+
+th, td { 
+    padding: 10px; 
+    border: 1px solid #ddd; 
+    text-align: left; 
+    font-size: 1rem; 
+} 
+th { background-color: #f2f2f2; }
+    
+input[type="number"] {
+        width: calc(100% - 20px); 
+        padding: 8px; 
+        margin: 10px 0; 
+        box-sizing: border-box; 
+        border: 1px solid #ccc; 
+        border-radius: 4px; 
+        margin-inline: 5px; 
+        background-color: #ffffff;
+    
+    }  
+    
+.submit-btn, #AgainButton { 
+    display: inline-block;
+    width: 20%;
+    padding: 10px 20px;
+    background-color: #020947;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+    margin-left: 20%;
+    border-radius: 4px;
+    text-align: center;
+    transition: background-color 0.3s; 
+
+} 
+.submit-btn:hover, #AgainButton:hover{ 
+background-color: #1e40af; 
+}
+
+#tryAgainBtn { 
+    display: inline-block;
+    width: 20%;
+    padding: 10px 20px;
+    background-color: #020947;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+    margin-left: 40%;
+    border-radius: 4px;
+    text-align: center;
+    transition: background-color 0.3s; 
+
+} 
+.submit-btn:hover, #AgainButton:hover, #tryAgainBtn:hover { 
+background-color: #1e40af; 
+}
+    
+form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #020947;
+    }
+
+#resultSection {
+        display: none;  
+        font-family: Arial, sans-serif;  
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+#result {
+        font-size: 20px;  /* Large font size */
+        line-height: 1.6;
+        color: #04050a;
+        margin-bottom: 20px;  
+    }
+    
+    #result p span {
+        font-weight: bold;  /* Bold text for the percentages */
+        color: #032a53;  /* Blue color for emphasis */
+    }
+
+.result-container { 
+    background-color: #ffffff; 
+    padding: 20px; 
+    border: 2px solid #ddd; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 30px;
+    margin-left: 20px; 
+} 
+
+.proposed-result-container { 
+    background-color: #f8ffff; 
+    padding: 20px; 
+    border: 2px solid #ddd; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 30px;
+    margin-left: 20px; 
+}
+
+.result-container , .proposed-result-container, .predicted-result-container h3 { 
+    margin-top: 0; 
+    color: #000000; 
+    text-align: center; 
+}
+
+.parameter-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Flexible grid for different screen sizes */
+    gap: 20px;
+    padding: 10px;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+/* Individual grid items */
+.grid-item {
+    background-color: #d6ebff;
+    padding: 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.3s;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.grid-item:hover {
+    transform: scale(1.05);
+    background-color: #bed9f3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.grid-item p {
+    margin: 0 0 5px 0;
+    font-weight: bold;
+    color: #000000;
+}
+
+.grid-item span {
+    display: block;
+    margin-top: 5px;
+    color: #000000;
+    font-weight: normal;
+}
+
+/* Blend-specific styling */
+.blend-box {
+    background-color: #ffffff; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 30px;
+    
+}
+
+.blend-heading {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 15px;
+}
+
+.blend-properties {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 20px;
+    padding: 10px;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+
+
+</style>
+<script>
+
+    function addBlend() {
+        const MAX_COALS = 10; 
+        const currentCoals = document.querySelectorAll('.blend').length;
+    
+        if (currentCoals >= MAX_COALS) {
+            alert("You can only add up to 10 coal types.");
+            return; 
+        }
+    
+        const index = currentCoals; 
+        const blendDiv = document.createElement("div");
+        blendDiv.className = "blend";
+        blendDiv.innerHTML = `
+            <label for="country${index}">Coal Type:</label>
+            <select name="country${index}" id="country${index}">
+                <option value="">Select Coal Type</option>
+                <option value="Captive 2">Captive 2</option>
+                <option value="Captive 1">Captive 1</option>
+                <option value="Imported Prime Hard Coking 1">Imported Prime Hard Coking 1</option>
+                <option value="Imported Prime Hard Coking 2">Imported Prime Hard Coking 2</option>
+                <option value="Imported Prime Hard Coking 3">Imported Prime Hard Coking 3</option>
+                <option value="Imported Prime Hard Coking 4">Imported Prime Hard Coking 4</option>
+                <option value="Imported Hard Coking 1">Imported Hard Coking 1</option>
+                <option value="Imported Hard Coking 2">Imported Hard Coking 2</option>
+                <option value="Imported Semi Soft Coking 1">Imported Semi Soft Coking 1</option>
+                <option value="Imported Semi Soft Coking 2">Imported Semi Soft Coking 2</option>
+                <option value="Imported Semi Soft Coking 3">Imported Semi Soft Coking 3</option>
+                <option value="Imported Semi Soft Coking 4">Imported Semi Soft Coking 4</option>
+                <option value="Imported Semi Soft Coking 5">Imported Semi Soft Coking 5</option>
+                <option value="Non Coking">Non Coking</option>
+            </select>
+            <input type="number" name="minPercentage${index}" placeholder="Min Percentage (0-100)" min="0" max="100">
+            <input type="number" name="maxPercentage${index}" placeholder="Max Percentage (0-100)" min="0" max="100">
+            <button type="button" class="remove-blend-btn" onclick="removeBlend(this)">X</button>
+        `;
+        
+        document.getElementById("coalBlends").appendChild(blendDiv);
+    
+        const coalCountElement = document.getElementById('coalCount');
+        if (coalCountElement) {
+            coalCountElement.value = index + 1;
+        }
+    }
+
+function removeBlend(button) {
+    button.parentElement.remove();
+    const coalCount = document.querySelectorAll('.blend').length;
+    const coalCountElement = document.getElementById('coalCount');
+    if (coalCountElement) {
+        coalCountElement.value = coalCount;
+    }
+}
+
+const MAX_ENTRIES = 11;
+
+document.addEventListener('DOMContentLoaded', function() {
+   
+    addBlend();
+        document.getElementById('addCoalButton').addEventListener('click', function() {
+            const blendEntries = document.getElementById('blendEntries');
+            if (blendEntries.children.length < MAX_ENTRIES) {
+                const newEntry = document.createElement('div');
+                newEntry.classList.add('blend-entry');
+                newEntry.innerHTML = `
+                    <label for="coalType">Coal Type:</label>
+                    <select name="coalType" class="coal-type">
+                        <option value="">Select Coal Type</option>
+                         <option value="Captive 2">Captive 2</option>
+                        <option value="Captive 1">Captive 1</option>
+                        <option value="Imported Prime Hard Coking 1">Imported Prime Hard Coking 1</option>
+                        <option value="Imported Prime Hard Coking 2">Imported Prime Hard Coking 2</option>
+                        <option value="Imported Prime Hard Coking 3">Imported Prime Hard Coking 3</option>
+                        <option value="Imported Prime Hard Coking 4">Imported Prime Hard Coking 4</option>
+                        <option value="Imported Hard Coking 1">Imported Hard Coking 1</option>
+                        <option value="Imported Hard Coking 2">Imported Hard Coking 2</option>
+                        <option value="Imported Semi Soft Coking 1">Imported Semi Soft Coking 1</option>
+                        <option value="Imported Semi Soft Coking 2">Imported Semi Soft Coking 2</option>
+                        <option value="Imported Semi Soft Coking 3">Imported Semi Soft Coking 3</option>
+                        <option value="Imported Semi Soft Coking 4">Imported Semi Soft Coking 4</option>
+                        <option value="Imported Semi Soft Coking 5">Imported Semi Soft Coking 5</option>
+                        <option value="Non Coking">Non Coking</option>
+                    </select>
+                    <input type="number" name="currentRange" id="currentRange" placeholder="Current Range (%)">
+                    <button type="remove-blend-btn" class="remove-blend-btn"  onclick="removeBlend(this)">X</button>
+                `;
+                blendEntries.appendChild(newEntry);
+                
+            } else {
+                alert("Maximum of 10 coal types can be added.");
+            }
+        });
+    });
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.submit-btn').addEventListener('click', async function(event) { 
+        event.preventDefault();
+
+        const processParameters = {
+            "Charging Tonnage": document.querySelector('input[name="chargingTonnage"]').value + " ton (dry)",
+            "Battery Operating Temperature": document.querySelector('input[name="batteryOperatingTemperature"]').value + "°C",
+            "Coke per Push": document.querySelector('input[name="cokePerPush"]').value + " ton (dry)",
+            "Coking Time": document.querySelector('input[name="cokingTime"]').value + " hours",
+            "Moisture Content": document.querySelector('input[name="moistureContent"]').value + "%",
+            "Cross Wall Temperature": document.querySelector('input[name="crossWallTemperature"]').value + "°C",
+            "Gross Coke Yield": document.querySelector('input[name="grossCokeYield"]').value + "%",
+            "Coke End Temperature": document.querySelector('input[name="cokeEndTemperature"]').value + "°C",
+            "Bulk Density": document.querySelector('input[name="bulkDensity"]').value + " kg/m³",
+            "Push Force": document.querySelector('input[name="pushForce"]').value + " Amp",
+            "GCM Pressure": document.querySelector('input[name="gcmPressure"]').value + " Pa",
+            "Quenching Time": document.querySelector('input[name="quenchingtime"]').value + " min",
+            "Charging Temperature": document.querySelector('input[name="chargingTemperature"]').value + "°C",
+            "PRI": document.querySelector('input[name="pri"]').value,
+            "GCM Temperature": document.querySelector('input[name="gcmTemperature"]').value + "°C"
+        };
+            
+
+        const desiredCokeParams = { 
+            ASH: parseFloat(document.querySelector('input[name="ASH"]').value) || 0, 
+            VM: parseFloat(document.querySelector('input[name="VM"]').value) || 0, 
+            MOISTURE: parseFloat(document.querySelector('input[name="MOISTURE"]').value) || 0, 
+            S_100MM: parseFloat(document.querySelector('input[name="S_100MM"]').value) || 0, 
+            S_80MM: parseFloat(document.querySelector('input[name="S_80MM"]').value) || 0, 
+            S_50MM: parseFloat(document.querySelector('input[name="S_50MM"]').value) || 0, 
+            S_40MM: parseFloat(document.querySelector('input[name="S_40MM"]').value) || 0, 
+            S_30MM: parseFloat(document.querySelector('input[name="S_30MM"]').value) || 0, 
+            S_MINUS_30MM: parseFloat(document.querySelector('input[name="S_MINUS_30MM"]').value) || 0, 
+            M_40MM: parseFloat(document.querySelector('input[name="M_40MM"]').value) || 0, 
+            M_10MM: parseFloat(document.querySelector('input[name="M_10MM"]').value) || 0,
+            M_MINUS_10MM: parseFloat(document.querySelector('input[name="M_MINUS_10MM"]').value) || 0, 
+            CSR: parseFloat(document.querySelector('input[name="CSR"]').value) || 0,
+            CRI: parseFloat(document.querySelector('input[name="CRI"]').value) || 0
+        };
+
+            const blends = [];
+            let totalMinPercentage = 0;
+            let totalMaxPercentage = 0;
+            document.querySelectorAll(".blend").forEach(blend => {
+                const minPercentage = parseFloat(blend.querySelector("input[name^='minPercentage']").value);
+                const maxPercentage = parseFloat(blend.querySelector("input[name^='maxPercentage']").value);
+                blends.push({
+                    minPercentage: minPercentage,
+                    maxPercentage: maxPercentage
+                });
+
+                totalMinPercentage += minPercentage;
+                totalMaxPercentage += maxPercentage;
+            });
+
+            if (totalMinPercentage > 100) {
+                alert("The total of all Min Percentages should be less than or equal to 100.");
+                return;
+            }
+
+            // Check if total max percentage is greater than or equal to 100
+            if (totalMaxPercentage < 100) {
+                alert("The total of all Max Percentages should be greater than or equal to 100.");
+                return;
+            }
+        
+
+        const requestData = {
+            blends,
+            desiredCokeParams
+        };
+
+        
+            const response = await fetch("https://coal-coke-abhitech-1e3a4b1b114a.herokuapp.com/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestData)
+            });
+
+        // Collect blendcoal data and calculate the total current range
+        const blendcoal = [];
+        let totalCurrentRange = 0;
+        const blendEntries = document.getElementsByClassName('blend-entry'); 
+
+        for (let i = 0; i < blendEntries.length; i++) {
+            const typeSelect = blendEntries[i].querySelector('select');
+            const currentRangeInput = blendEntries[i].querySelector('input');
+            if (typeSelect && currentRangeInput) {
+                const type = typeSelect.value;
+                const currentRange = parseFloat(currentRangeInput.value);
+                if (type && !isNaN(currentRange)) {
+                    blendcoal.push({ type, currentRange });
+                    totalCurrentRange += currentRange;
+                }
+            }
+        }
+
+        // Validation for blendcoal data
+        if (totalCurrentRange !== 100) {
+            alert("The total of current range must add up to 100.");
+            return;
+        }
+
+        if (blendcoal.length === 0) {
+            alert("Please fill at least one coal type and current range.");
+            return;
+        }
+
+        // Second fetch request for blendcoal prediction
+        const oneCoalPredictRequest = fetch('https://coal-coke-abhitech-1e3a4b1b114a.herokuapp.com/three', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ blendcoal })
+        });
+
+        // Wait for both fetch requests to complete
+        try {
+            const [percentPredictResponse, oneCoalPredictResponse] = await Promise.all([
+            response,    
+            oneCoalPredictRequest
+                
+            ]);
+
+            const result = await response.json();
+
+            
+            const onecoalPredictionData = await oneCoalPredictResponse.json();
+
+            // Handle results for both predictions
+            displayResults(result, desiredCokeParams, processParameters, onecoalPredictionData.proposed_coke_parameters, onecoalPredictionData.proposed_coalblend_parameters);
+           
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+});
+
+function displayResults(result, desiredCokeParams, processParameters, proposed_coke_parameters, proposed_coalblend_parameters) {
+    const resultSection = document.getElementById('resultSection');
+    const resultDiv = document.getElementById('result');
+    
+    const blends = [
+                result.blends.blend_1,
+                result.blends.blend_2,
+                result.blends.blend_3
+            ];
+            
+            if (!blends || blends.length === 0) {
+                console.error("Blends are missing or not an array.");
+                return;
+            }
+        
+            // Create the coal types array based on user-selected coal types
+            const coalTypes = [];
+            document.querySelectorAll('.blend select').forEach((select, index) => {
+                coalTypes.push(select.value || `Coal ${index + 1}`);
+            });
+
+            let blendsTable = `
+                
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Coal Type</th>
+                            <th>Blend 1</th>
+                            <th>Blend 2</th>
+                            <th>Blend 3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${coalTypes.map((coal, i) => `
+                            <tr>
+                                <td>${coal}</td>
+                                <td>${blends[0].percentages[i] || 'N/A'}</td>
+                                <td>${blends[1].percentages[i] || 'N/A'}</td>
+                                <td>${blends[2].percentages[i] || 'N/A'}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+    // Prepare the predicted coke parameters
+    const parameterNames = ['ASH', 'VM', 'MOISTURE', 'S_100MM', 'S_80MM', 'S_50MM', 'S_40MM', 'S_30MM', 'S_MINUS_30MM', 'M_40MM', 'M_10MM', 'M_MINUS_10MM', 'CSR', 'CRI'];
+
+    let propertiesTable = `
+    <div class="result-container">
+        ${['Blend 1', 'Blend 2', 'Blend 3'].map((blendLabel, blendIndex) => `
+            <div class="blend-box">
+                <div class="blend-heading">${blendLabel}</div>
+                <div class="blend-properties">
+                    ${parameterNames.map((property, index) => `
+                        <div class="grid-item">
+                            <p><strong>${property}:</strong> 
+                            <span>${blends[blendIndex].properties[index].toFixed ? blends[blendIndex].properties[index].toFixed(2) : blends[blendIndex].properties[index]}</span></p>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('')}
+    </div>
+`;
+    
+    const DesiredCokeParameters = Object.entries(desiredCokeParams)
+        .map(([param, value]) => `<div class="grid-item"><p>${param}: <span>${value.toFixed(2)}</span></p></div>`)
+        .join('');
+    
+    const processParameterNames = Object.keys(processParameters);
+    const ProcessParameterResults = processParameterNames
+        .map(param => `<div class="grid-item"><p>${param}: <span>${processParameters[param]}</span></p></div>`)
+        .join('');
+    
+    const proposedCoalFormattedResults = proposed_coalblend_parameters.map(param => 
+        Object.entries(param)
+            .map(([key, value]) => `<div class="grid-item"><p>${key}: <span>${value.toFixed ? value.toFixed(2) : value}</span></p></div>`)
+            .join('')
+    ).join('');
+    
+    const oneCoalFormattedResults = proposed_coke_parameters.map(param => 
+        Object.entries(param)
+            .map(([key, value]) => `<div class="grid-item"><p>${key}: <span>${value.toFixed ? value.toFixed(2) : value}</span></p></div>`)
+            .join('')
+    ).join('');
+
+    // Final combined result structure
+    const finalResultHTML = `
+        <h3>Predictions</h3>
+            <div class="result-blends">
+                ${blendsTable}
+            </div>
+            <h3>Predicted Coke Parameters</h3>
+        <div class="parameter-box">
+                ${propertiesTable}
+        </div>
+        <div class="proposed-result-container">
+            <h3>Proposed Blended Coal Parameters</h3>
+            <div class="parameter-box">${proposedCoalFormattedResults}</div>
+            <h3>Proposed Coke Parameters</h3>
+            <div class="parameter-box">${oneCoalFormattedResults}</div>
+        </div>
+        <div class="result-container">
+            <h3>Desired Coke Parameters:</h3>
+            <div class="parameter-box">${DesiredCokeParameters}</div>
+            <h3>Process Parameters:</h3>
+            <div class="parameter-box">${ProcessParameterResults}</div>
+        </div>
+        <button type="button" onclick="resetForm()"  id = "tryAgainBtn">Try Again</button>
+    `;
+
+    // Insert the final result into the resultDiv
+    resultDiv.innerHTML = finalResultHTML;
+
+    // Display the result section and hide the input form section
+    resultSection.style.display = 'block';
+    document.getElementById("inputFormSection").style.display = 'none';
+}
+
+
+// Reset form function
+function resetForm() {
+    window.location.href = 'coal_Ai.html';
+    
+}
+
+function removeBlend(button) {
+    const blendEntry = button.parentElement;
+    blendEntry.remove();
+}
+</script>
+</head>
+<body>
+
+    <header>
+        <div class="main">
+            <div class="navbar">
+
+                <div class="logo-left">
+                    <img src="/static/images/Abhitech.jpeg" alt="Abhitech Logo" class="logo-img-left">
+                </div>
+
+                <div class="icon">
+                    <h2 class="logo">COKESMART</h2>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="coal_properties.html">COAL PROPERTIES</a></li>
+                        <li><a href="min-max.html">MIN-MAX WEIGHTAGE</a></li>
+                        <li><a href="coalai.html">COAL AI</a></li>
+                        <li><a href="cost.html">COST AI</a></li>
+                        <li><a href="index.html">HOME</a></li>
+                    </ul>
+                </div>
+
+                <div class="logo-right">
+                    <img src="/static/images/Industantra.jpeg" alt="Industantra Logo" class="logo-img-right">
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <section id="inputFormSection"> 
+        <div class="form-container"> 
+            
+            <form id="coalForm">  
+                <div id="coalBlends"  >
+                    <h2>Coal Type</h2> 
+                    <div class="blend-row">
+                    
+                    </div>
+                </div>
+                
+            <button type="button" class="add-blend-btn" onclick="addBlend()">Add Coal</button> 
+             
+    
+        <div id="blendEntries">
+            <h2> Proposed Coal Blend Properties</h2>
+            <div class="blend-entry">
+                <label for="type0">Coal Type:</label>
+                <select name="type0" id="type0">
+                    <option value="">Select Coal Type</option>
+                    <option value="Captive 2">Captive 2</option>
+                    <option value="Captive 1">Captive 1</option>
+                    <option value="Imported Prime Hard Coking 1">Imported Prime Hard Coking 1</option>
+                    <option value="Imported Prime Hard Coking 2">Imported Prime Hard Coking 2</option>
+                    <option value="Imported Prime Hard Coking 3">Imported Prime Hard Coking 3</option>
+                    <option value="Imported Prime Hard Coking 4">Imported Prime Hard Coking 4</option>
+                    <option value="Imported Hard Coking 1">Imported Hard Coking 1</option>
+                    <option value="Imported Hard Coking 2">Imported Hard Coking 2</option>
+                    <option value="Imported Semi Soft Coking 1">Imported Semi Soft Coking 1</option>
+                    <option value="Imported Semi Soft Coking 2">Imported Semi Soft Coking 2</option>
+                    <option value="Imported Semi Soft Coking 3">Imported Semi Soft Coking 3</option>
+                    <option value="Imported Semi Soft Coking 4">Imported Semi Soft Coking 4</option>
+                    <option value="Imported Semi Soft Coking 5">Imported Semi Soft Coking 5</option>
+                    <option value="Non Coking">Non Coking</option>
+                </select>
+                <input type="number" name="currentRange0" id="currentRange0" placeholder="Current Range (%)">
+                <button type="remove-blend-btn" class="remove-blend-btn"  onclick="removeBlend(this)">X</button>
+            </div>
+            </div>
+        <button type="button" id="addCoalButton">Add Coal</button>
+        
+            
+
+        <h2>Desired Coke Parameters</h2>
+        <div class="form-section">
+            <table>
+                <tr>
+                    <td><label for="ASH">ASH</label></td>
+                    <td><input type="number" name="ASH" step="0.01" class="coke-param" placeholder="ASH" value="15"></td>
+                    <td><label for="VM">VM</label></td>
+                    <td><input type="number" name="VM" step="0.01" class="coke-param" placeholder="VM" value="1"></td>
+                </tr>
+                <tr>
+                    <td><label for="MOISTURE">MOISTURE</label></td>
+                    <td><input type="number" name="MOISTURE" step="0.01" class="coke-param" placeholder="MOISTURE" value="4"></td>
+                    <td><label for="S_100MM">S_100MM</label></td>
+                    <td><input type="number" name="S_100MM" step="0.01" class="coke-param" placeholder="S_100MM" value="0.6"></td>
+                </tr>
+                <tr>
+                    <td><label for="S_80MM">S_80MM</label></td>
+                    <td><input type="number" name="S_80MM" step="0.01" class="coke-param" placeholder="S_80MM" value="1.63"></td>
+                    <td><label for="S_50MM">S_50MM</label></td>
+                    <td><input type="number" name="S_50MM" step="0.01" class="coke-param" placeholder="S_50MM" value="18"></td>
+                </tr>
+                <tr>
+                    <td><label for="S_40MM">S_40MM</label></td>
+                    <td><input type="number" name="S_40MM" step="0.01" class="coke-param" placeholder="S_40MM" value="31"></td>
+                    <td><label for="S_30MM">S_30MM</label></td>
+                    <td><input type="number" name="S_30MM" step="0.01" class="coke-param" placeholder="S_30MM" value="24"></td>
+                </tr>
+                <tr>
+                    <td><label for="S_MINUS_30MM">S_MINUS_30MM</label></td>
+                    <td><input type="number" name="S_MINUS_30MM" step="0.01" class="coke-param" placeholder="S_MINUS_30MM" value="6.5"></td>
+                    <td><label for="M_40MM">M_40MM</label></td>
+                    <td><input type="number" name="M_40MM" step="0.01" class="coke-param" placeholder="M_40MM" value = "92"></td>
+                </tr>
+                <tr>
+                    <td><label for="M_10MM">M_10MM</label></td>
+                    <td><input type="number" name="M_10MM" step="0.01" class="coke-param" placeholder="M_10MM" value="3"></td>
+                    <td><label for="M_MINUS_10MM">M_MINUS_10MM</label></td>
+                    <td><input type="number" name="M_MINUS_10MM" step="0.01" class="coke-param" placeholder="M_MINUS_10MM" value="4"></td>
+                </tr>
+                <tr>
+                    <td><label for="CSR">CSR</label></td>
+                    <td><input type="number" name="CSR" step="0.01" class="coke-param" placeholder="CSR" value="67"></td>
+                    <td><label for="CRI">CRI</label></td>
+                    <td><input type="number" name="CRI" step="0.01" class="coke-param" placeholder="CRI" value="25"></td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Process Parameters</h2>
+        <div class="form-section">
+            <table>
+                <tr>
+                    <td><label for="chargingTonnage">Charging Tonnage</label></td>
+                    <td><input type="number" name="chargingTonnage" class="process-param" placeholder="Charging Tonnage" value="43.5"></td>
+                    <td><label for="moistureContent">Moisture Content</label></td>
+                    <td><input type="number" name="moistureContent" class="process-param" placeholder="Moisture Content" value="10.5"></td>
+                    <td><label for="bulkDensity">Bulk Density</label></td>
+                    <td><input type="number" name="bulkDensity" class="process-param" placeholder="Bulk Density of Charging Coal" value="1.12"></td>
+                    <td><label for="chargingTemperature">Charging Temperature</label></td>
+                    <td><input type="number" name="chargingTemperature" class="process-param" placeholder="Charging Temperature" value="1000"></td>
+                </tr>
+                <tr>
+                    <td><label for="batteryOperatingTemperature">Battery Operating Temperature</label></td>
+                    <td><input type="number" name="batteryOperatingTemperature" class="process-param" placeholder="Battery Operating Temperature" value="1350"></td>
+                    <td><label for="crossWallTemperature">Cross Wall Temperature</label></td>
+                    <td><input type="number" name="crossWallTemperature" class="process-param" placeholder="Cross Wall Temperature" value="1310"></td>
+                    <td><label for="pushForce">Push Force</label></td>
+                    <td><input type="number" name="pushForce" class="process-param" placeholder="Push Force" value="240"></td>
+                    <td><label for="pri">PRI</label></td>
+                    <td><input type="number" name="pri" class="process-param" placeholder="PRI" value="100"></td>
+                </tr>
+                <tr>
+                    <td><label for="cokePerPush">Coke per Push</label></td>
+                    <td><input type="number" name="cokePerPush" class="process-param" placeholder="Coke per Push in Dry Basis" value="33.6"></td>
+                    <td><label for="grossCokeYield">Gross Coke Yield</label></td>
+                    <td><input type="number" name="grossCokeYield" class="process-param" placeholder="Gross Coke Yield" value="75"></td>
+                    <td><label for="gcmPressure">GCM Pressure</label></td>
+                    <td><input type="number" name="gcmPressure" class="process-param" placeholder="GCM Pressure" value="160"></td>
+                    <td><label for="gcmTemperature">GCM Temperature</label></td>
+                    <td><input type="number" name="gcmTemperature" class="process-param" placeholder="GCM Temperature" value="85"></td>
+                </tr>
+                <tr>
+                    <td><label for="cokingTime">Coking Time</label></td>
+                    <td><input type="number" name="cokingTime" class="process-param" placeholder="Coking Time" value="27"></td>
+                    <td><label for="cokeEndTemperature">Coke End Temperature</label></td>
+                    <td><input type="number" name="cokeEndTemperature" class="process-param" placeholder="Coke End Temperature" value="1050"></td>
+                    <td><label for="quenchingTime">Quenching Time</label></td>
+                    <td><input type="number" name="quenchingtime" class="process-param" placeholder="Quenching Time" value="5"></td>
+                </tr>
+            </table>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+        <button type="button" id="AgainButton" onclick="resetForm()">Reset</button>
+    </form>
+    </div>
+    </section>
+
+    <section id="resultSection" style="display: none;">
+        <div id="result"></div>
+    </section> 
+    
+</body>
+</html>

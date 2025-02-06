@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Min-Max Weightage</title>
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background-color: #f5f5f5; 
+            margin: 0; padding: 0; } 
+        .container { 
+                width: 60%; 
+                margin: 20px auto; 
+                padding: 20px; 
+                border-radius: 8px; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+                background-color: #ffffff; 
+            } 
+            h2 { 
+                text-align: center; 
+                margin-bottom: 30px; 
+                color: #333;
+                font-size: 28px ; 
+            } 
+            .form-group { 
+                margin-bottom: 20px; 
+            } 
+            .form-group label { 
+                display: block; 
+                margin-bottom: 5px; 
+                font-weight: bold; 
+                color: #555; 
+            } 
+            .input-slider-group { 
+                display: flex; 
+                align-items: center; 
+                gap: 10px; 
+            } 
+            .input-slider-group input[type="number"] { 
+                width: 30%; 
+                padding: 10px; 
+                border: 1px solid #ccc; 
+                border-radius: 4px; 
+                box-sizing: border-box; 
+            } 
+            .input-slider-group input[type="range"] { 
+                flex: 1; -webkit-appearance: none; 
+                appearance: none; 
+                height: 10px; 
+                border-radius: 5px; 
+                background: linear-gradient(to right, #fa4033, #ffeb3b, #329936); 
+                outline: none; 
+                opacity: 0.7; 
+                transition: opacity 0.15s ease-in-out; 
+            } 
+            .input-slider-group input[type="range"]::-webkit-slider-thumb { 
+                -webkit-appearance: none; 
+                appearance: none; 
+                width: 20px; 
+                height: 20px; 
+                border-radius: 50%; 
+                background: #000000; 
+                cursor: pointer; 
+                transition: background 0.15s ease-in-out; 
+            } 
+            .input-slider-group input[type="range"]::-moz-range-thumb { 
+                width: 20px; 
+                height: 20px; 
+                border-radius: 50%; 
+                background: #4caf50; 
+                cursor: pointer; 
+                transition: background 0.15s ease-in-out; 
+            } 
+            .slider-value { 
+                width: 50px; 
+                text-align: center; 
+                font-size: 1.2em; 
+                margin-left: 83%;
+                color: #333; 
+            } 
+            button[type="submit"] { 
+                display: block; 
+                width: 30%; 
+                padding: 10px 0; 
+                background-color: #020947; 
+                color: white; 
+                border: none; 
+                border-radius: 4px; 
+                cursor: pointer; 
+                margin-left: 35%;
+                font-size: 1.1em; 
+                margin-top: 20px; 
+                transition: background-color 0.3s ease-in-out; 
+            } 
+            button[type="submit"]:hover { 
+                background-color: #1e40af; 
+            }
+
+            button { 
+                display: block; 
+                width: 30%; 
+                padding: 10px 0; 
+                background-color: #020947; 
+                color: white; 
+                border: none; 
+                border-radius: 4px; 
+                cursor: pointer; 
+                margin-left: 35%;
+                font-size: 1.1em; 
+                margin-top: 20px; 
+                transition: background-color 0.3s ease-in-out; 
+            } 
+            button:hover { 
+                background-color: #1e40af; 
+            } 
+            
+            
+            
+
+    </style>
+
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo-left">
+                <img src="static/images/Abhitech.jpeg" alt="Abhitech Logo" class="logo-img-left">
+            </div>
+            <ul class="navbar-links">
+                <li><h1>SmartCoke</h1></li>
+                <li><a href="coal_properties.html">COAL PROPERTIES</a></li>
+                <li><a href="min-max.html">MIN-MAX WEIGHTAGE</a></li>
+                <li><a href="cost.html">COST AI</a></li>
+                <li><a href="trainingpage.html">TRAINING</a></li>
+                <li><a href="index.html">HOME</a></li>
+                
+            </ul>
+            <div class="logo-right">
+                <img src="static/images/Industantra.jpg" alt="Right Logo" class="logo-img-right">
+            </div>
+        </nav>
+           
+        
+</header>
+
+    <div class="container">
+        <h2>Coke Properties of Proposed Blend</h2>
+
+        <form id="single-entry-form">
+            <!-- Ash -->
+            <div class="form-group">
+                <label for="ash">Ash (%)</label>
+                <div class="input-slider-group">
+                    <input type="number" id="ash_lower" name="ash_lower" placeholder="Lower Limit" step="0.01" required>
+                    <input type="number" id="ash_upper" name="ash_upper" placeholder="Upper Limit" step="0.01" required>
+                    <label for="ash_weight">Weightage</label>
+                    <input type="range" id="ash_weight" name="ash_weight" min="0" max="2" step="0.1" value="1" required>
+                </div>
+                <div class="slider-value">
+                    <span id="ash_slider_value">1</span>
+                </div>
+            </div>
+
+            <!-- Volatile Matter -->
+            <div class="form-group">
+                <label for="vm">Volatile Matter (VM) (%)</label>
+                <div class="input-slider-group">
+                    <input type="number" id="vm_lower" name="vm_lower" placeholder="Lower Limit" step="0.01" required>
+                    <input type="number" id="vm_upper" name="vm_upper" placeholder="Upper Limit" step="0.01" required>
+                    <label for="vm_weight">Weightage</label>
+                    <input type="range" id="vm_weight" name="vm_weight" min="0" max="2" step="0.1" value="1" required>
+                </div>
+                <div class="slider-value">
+                    <span id="vm_slider_value">1</span>
+                </div>
+            </div>
+
+            <!-- M40 -->
+            <div class="form-group">
+                <label for="m40">M40 (%)</label>
+                <div class="input-slider-group">
+                    <input type="number" id="m40_lower" name="m40_lower" placeholder="Lower Limit" step="0.01" required>
+                    <input type="number" id="m40_upper" name="m40_upper" placeholder="Upper Limit" step="0.01" required>
+                    <label for="m40_weight">Weightage</label>
+                    <input type="range" id="m40_weight" name="m40_weight" min="0" max="2" step="0.1" value="1" required>
+                </div>
+                <div class="slider-value">
+                    <span id="m40_slider_value">1</span>
+                </div>
+            </div>
+
+            <!-- M10 -->
+            <div class="form-group">
+                <label for="m10">M10 (%)</label>
+                <div class="input-slider-group">
+                    <input type="number" id="m10_lower" name="m10_lower" placeholder="Lower Limit" step="0.01" required>
+                    <input type="number" id="m10_upper" name="m10_upper" placeholder="Upper Limit" step="0.01" required>
+                    <label for="m10_weight">Weightage</label>
+                    <input type="range" id="m10_weight" name="m10_weight" min="0" max="2" step="0.1" value="1" required>
+                </div>
+                <div class="slider-value">
+                    <span id="m10_slider_value">1</span>
+                </div>
+            </div>
+
+            <!-- CSR -->
+            <div class="form-group">
+                <label for="csr">CSR (%)</label>
+                <div class="input-slider-group">
+                    <input type="number" id="csr_lower" name="csr_lower" placeholder="Lower Limit" step="0.01" required>
+                    <input type="number" id="csr_upper" name="csr_upper" placeholder="Upper Limit" step="0.01" required>
+                    <label for="csr_weight">Weightage</label>
+                    <input type="range" id="csr_weight" name="csr_weight" min="0" max="2" step="0.1" value="1" required>
+                </div>
+                <div class="slider-value">
+                    <span id="csr_slider_value">1</span>
+                </div>
+            </div>
+
+            <!-- CRI -->
+            <div class="form-group">
+                <label for="cri">CRI (%)</label>
+                <div class="input-slider-group">
+                    <input type="number" id="cri_lower" name="cri_lower" placeholder="Lower Limit" step="0.01" required>
+                    <input type="number" id="cri_upper" name="cri_upper" placeholder="Upper Limit" step="0.01" required>
+                    <label for="cri_weight">Weightage</label>
+                    <input type="range" id="cri_weight" name="cri_weight" min="0" max="2" step="0.1" value="1" required>
+                </div>
+                <div class="slider-value">
+                    <span id="cri_slider_value">1</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="AMS">AMS( Arithmetic Mean Size )</label>
+                <div class="input-slider-group">
+                    <input type="number" id="ams_lower" name="ams_lower" placeholder="Lower Limit" step="0.01" required>
+                    <input type="number" id="ams_upper" name="ams_upper" placeholder="Upper Limit" step="0.01" required>
+                    <label for="ams_weight">Weightage</label>
+                    <input type="range" id="ams_weight" name="ams_weight" min="0" max="2" step="0.1" value="1" required>
+                </div>
+                <div class="slider-value">
+                    <span id="ams_slider_value">1</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="cost_weightage">Cost Weightage:</label>
+                <div class="input-slider-group">
+                    <input type="range" id="cost_weightage" name="cost_weightage" min="0" max="2" step="0.1" value="1" required>
+                </div>
+                <div class="slider-value">
+                    <span id="cost_weightage_value">1</span>
+                    
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="coke_quality">Coke Quality:</label>
+                <div class="input-slider-group">
+                    <input type="range" id="coke_quality" name="coke_quality" min="0" max="2" step="0.1" value="1" required>
+                </div>
+                <div class="slider-value">
+                    <span id="coke_quality_value">1</span>
+                </div>
+            </div>
+            <button type="submit">Submit</button>
+        
+        </form>
+    </div>
+
+    <script>
+        function updateSliderColor(slider, valueDisplay) {
+            const value = parseFloat(slider.value);
+            slider.classList.remove('red-thumb', 'green-thumb');
+            valueDisplay.classList.remove('red', 'green');
+
+            if (value < 1) {
+                slider.classList.add('red-thumb');
+                valueDisplay.classList.add('red');
+            } else if (value > 1) {
+                slider.classList.add('green-thumb');
+                valueDisplay.classList.add('green');
+            }
+
+            valueDisplay.textContent = value.toFixed(1);
+        }
+
+        // Initialize sliders
+        const sliders = [
+            { slider: document.getElementById('ash_weight'), valueDisplay: document.getElementById('ash_slider_value') },
+            { slider: document.getElementById('vm_weight'), valueDisplay: document.getElementById('vm_slider_value') },
+            { slider: document.getElementById('m40_weight'), valueDisplay: document.getElementById('m40_slider_value') },
+            { slider: document.getElementById('m10_weight'), valueDisplay: document.getElementById('m10_slider_value') },
+            { slider: document.getElementById('csr_weight'), valueDisplay: document.getElementById('csr_slider_value') },
+            { slider: document.getElementById('cri_weight'), valueDisplay: document.getElementById('cri_slider_value') },
+            { slider: document.getElementById('ams_weight'), valueDisplay: document.getElementById('ams_slider_value') },
+            { slider: document.getElementById('cost_weightage'), valueDisplay: document.getElementById('cost_weightage_value'), noColor: true },
+            { slider: document.getElementById('coke_quality'), valueDisplay: document.getElementById('coke_quality_value'), noColor: true }
+        ];
+
+        sliders.forEach(({ slider, valueDisplay, noColor }) => {
+            // Handle color update if it's not the special sliders
+            if (!noColor) {
+                updateSliderColor(slider, valueDisplay);
+                slider.addEventListener('input', () => updateSliderColor(slider, valueDisplay));
+            } else {
+                valueDisplay.textContent = slider.value;
+                slider.addEventListener('input', () => {
+                    valueDisplay.textContent = slider.value;
+                });
+            }
+        });
+
+        const form = document.getElementById('single-entry-form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();  
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            fetch('https://abhitech-smartcoke-3aea6d56a2c9.herokuapp.com/minmax', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);  // Show success message
+            })
+            .catch(error => {
+                alert('Error: ' + error.message);  // Show error message
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fetch data from the server
+            fetch('https://abhitech-smartcoke-3aea6d56a2c9.herokuapp.com/minmax_get_data')
+                .then(response => response.json())
+                .then(data => {
+                    // Populate form fields with the fetched data
+                    for (const key in data) {
+                        const input = document.querySelector(`[name="${key}"]`);
+                        if (input) {
+                            input.value = data[key];
+                            // Update slider values dynamically
+                            if (input.type === 'range') {
+                                const sliderValue = document.getElementById(`${key}_value`);
+                                if (sliderValue) {
+                                    sliderValue.textContent = parseFloat(input.value).toFixed(1);
+                                }
+                            }
+                        }
+                    }
+        
+                    // Update sliders to match the loaded values
+                    sliders.forEach(({ slider, valueDisplay, noColor }) => {
+                        if (!noColor) {
+                            updateSliderColor(slider, valueDisplay);
+                        } else {
+                            valueDisplay.textContent = slider.value;
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        });
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Get all the navigation links
+            const navLinks = document.querySelectorAll('.navbar a');
+    
+            // Loop through each link to check if it matches the current page URL
+            navLinks.forEach(link => {
+                if (link.href === window.location.href) {
+                    link.classList.add('active'); // Add 'active' class to the link that matches the URL
+                }
+            });
+        });
+</script>
+</body>
+</html>
+
+

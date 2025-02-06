@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query</title>
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        input[type="text"], input[type="email"],input[type="phoneNo"] {
+            width: 95%;
+            padding: 10px;
+            font-size: medium;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        
+        textarea {
+            width: 95%;
+            padding: 10px;
+            font-size: medium;
+            min-height: 30%;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button[type="submit"] {
+            background-color: #041368;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            margin-left: 45%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #080163;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo-left">
+                <img src="static/images/Abhitech.jpeg" alt="Abhitech Logo" class="logo-img-left">
+            </div>
+            <ul class="navbar-links">
+                <li><h1>SmartCoke</h1></li>
+                <li><a href="coal_properties.html">COAL PROPERTIES</a></li>
+                <li><a href="min-max.html">MIN-MAX WEIGHTAGE</a></li>
+                <li><a href="cost.html">COST AI</a></li>
+                <li><a href="trainingpage.html">TRAINING</a></li>
+                <li><a href="index.html">HOME</a></li>
+                
+            </ul>
+            <div class="logo-right">
+                <img src="static/images/Industantra.jpg" alt="Right Logo" class="logo-img-right">
+            </div>
+        </nav>       
+</header>
+
+<div class="container">
+    <h1>Ask a Question</h1>
+    <form action="submit.php" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="contact">Contact Number:</label>
+        <input type="phoneNo" id="number" name="number">
+
+        <label for="question">What is your query?:</label>
+        <textarea id="question" name="question" required></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+    
+</body>
+</html>
