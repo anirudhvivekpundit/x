@@ -98,11 +98,14 @@ def logindata():
         return "User not found", 401
 
     hashed_password = user[1] 
-    print(hashed_password); # Unpack tuple result
+    print(hashed_password); 
 
     # Verify password hash
     if bcrypt.check_password_hash(hashed_password, password):
-        return render_template("home.html")
+        session["loggedin"] = True
+        session["id"] = user["id"]
+        session["name"] = user["username"]
+        return render_template("index.html")
     else:
         return "Invalid credentials", 401
 
