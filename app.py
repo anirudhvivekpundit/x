@@ -83,30 +83,32 @@ def index_ht():
 
 @app.route("/logindata", methods=["GET", "POST"])
 def logindata():
-    email = request.form.get("email")  # Retrieve email
-    password = request.form.get("password")  # Retrieve password
+    email = request.form.get("email")
+    password = request.form.get("password")
 
-    # Check database for user
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
-    user = cursor.fetchone()
-    cursor.close()
+    if not email or not password:
+        return "Email and password are required", 400
 
-    # If user exists, verify password
-    if user and bcrypt.check_password_hash(user["password_hash"], password):
-        session["loggedin"] = True
-        session["id"] = user["id"]
-        session["name"] = user["username"]
-        return redirect(url_for("dashboard"))
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT username, password_hash FROM users WHERE email = %s", (email,))
+    user = cur.fetchone()
+    cur.close()
+
+    if not user:
+        return "User not found", 401
+
+    username, hashed_password = user  # Unpack tuple result
+
+    # Verify password hash
+    if bcrypt.check_password_hash(hashed_password, password):
+        return f"Login successful! Welcome, {username}!", 200
     else:
-        return render_template("login.html", error="Invalid email or password")
-
-    return render_template("login.html")
+        return "Invalid credentials", 401
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        name = request.form.get("username")
+        name = request.form.get("name")
         email = request.form.get("email")
         password = request.form.get("password")
         hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
