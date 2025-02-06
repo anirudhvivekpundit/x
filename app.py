@@ -97,7 +97,8 @@ def logindata():
     if not user:
         return "User not found", 401
 
-    hashed_password = user["password_hash"]  # Unpack tuple result
+    hashed_password = user["password_hash"] 
+    print(hashed_password); # Unpack tuple result
 
     # Verify password hash
     if bcrypt.check_password_hash(hashed_password, password):
