@@ -97,7 +97,7 @@ def logindata():
     if not user:
         return "User not found", 401
 
-    hashed_password = user.get("password_hash")
+    hashed_password = user[1] 
     print(hashed_password); # Unpack tuple result
 
     # Verify password hash
