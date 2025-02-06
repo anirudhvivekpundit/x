@@ -106,9 +106,9 @@ def logindata():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        name = request.form["name"]
-        email = request.form["email"]
-        password = request.form["password"]
+        name = request.form.get("name")
+        email = request.form.get("email")
+        password = request.form.get("password")
         hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
