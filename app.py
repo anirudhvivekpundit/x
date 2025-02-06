@@ -33,7 +33,7 @@ app.config["MYSQL_HOST"] = "mgs0iaapcj3p9srz.cbetxkdyhwsb.us-east-1.rds.amazonaw
 app.config["MYSQL_USER"] = "pnkapa4yyzff4w0d"  
 app.config["MYSQL_PASSWORD"] = "p446ahxirq642tcv"  
 app.config["MYSQL_DB"] = "mngvbjoba8gvhjbn"  
-app.config["MYSQL_PORT"] = 3306  
+
 
 mysql = MySQL(app)
 bcrypt = Bcrypt(app)
