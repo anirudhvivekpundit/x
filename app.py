@@ -102,10 +102,7 @@ def logindata():
 
     # Verify password hash
     if bcrypt.check_password_hash(hashed_password, password):
-        session["loggedin"] = True
-        session["id"] = user["id"]
-        session["name"] = user["username"]
-        return render_template("index.html")
+        return render_template("index.html") , user
     else:
         return "Invalid credentials", 401
 
