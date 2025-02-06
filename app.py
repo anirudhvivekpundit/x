@@ -101,7 +101,7 @@ def logindata():
 
     # Verify password hash
     if bcrypt.check_password_hash(hashed_password, password):
-        return f"Login successful! Welcome, {username}!", 200
+        return redirect(url_for("dashboard"))
     else:
         return "Invalid credentials", 401
 
