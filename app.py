@@ -81,7 +81,7 @@ def index_ht():
     return render_template('index.html')
 
 
-@app.route("/logindata", methods=["GET", "POST"])
+@app.route("/logindata", methods=[ "POST"])
 def logindata():
     email = request.form.get("email")
     password = request.form.get("password")
