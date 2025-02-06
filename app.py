@@ -102,7 +102,7 @@ def logindata():
 
     # Verify password hash
     if bcrypt.check_password_hash(hashed_password, password):
-        return redirect(url_for("dashboard"))
+        return render_template("home.html")
     else:
         return "Invalid credentials", 401
 
