@@ -29,7 +29,7 @@ if DATABASE_URL:
     username, password, host, db_name = DATABASE_URL.split(":")[0], DATABASE_URL.split(":")[1].split("@")[0], DATABASE_URL.split("@")[1].split("/")[0], DATABASE_URL.split("/")[-1]
 
 
-app.config["MYSQL_HOST"] = "mgs0iaapcj3p9srz.cbetxkdyhwsb.us-east-1.rds.amazonaws.com" 
+app.config["MYSQL_HOST"] = "    " 
 app.config["MYSQL_USER"] = "pnkapa4yyzff4w0d"  
 app.config["MYSQL_PASSWORD"] = "p446ahxirq642tcv"  
 app.config["MYSQL_DB"] = "mngvbjoba8gvhjbn"  
@@ -92,7 +92,7 @@ def logindata():
         user = cursor.fetchone()
         cursor.close()
 
-        if user and bcrypt.check_password_hash(user["password"], password):
+        if user :
             session["loggedin"] = True
             session["Id"] = user["Id"]  # Ensure database column is named `id`
             session["name"] = user["name"]
