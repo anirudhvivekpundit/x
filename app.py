@@ -29,11 +29,11 @@ if DATABASE_URL:
     username, password, host, db_name = DATABASE_URL.split(":")[0], DATABASE_URL.split(":")[1].split("@")[0], DATABASE_URL.split("@")[1].split("/")[0], DATABASE_URL.split("/")[-1]
 
 
-app.config["MYSQL_HOST"] = "    " 
+app.config["MYSQL_HOST"] = "mgs0iaapcj3p9srz.cbetxkdyhwsb.us-east-1.rds.amazonaws.com" 
 app.config["MYSQL_USER"] = "pnkapa4yyzff4w0d"  
 app.config["MYSQL_PASSWORD"] = "p446ahxirq642tcv"  
 app.config["MYSQL_DB"] = "mngvbjoba8gvhjbn"  
-
+app.config["MYSQL_PORT"] = 3306  
 
 mysql = MySQL(app)
 bcrypt = Bcrypt(app)
@@ -83,23 +83,23 @@ def index_ht():
 
 @app.route("/logindata", methods=["GET", "POST"])
 def logindata():
-    if request.method == "POST":
-        email = request.form["email"]
-        password = request.form["password"]
+    email = request.form.get("email")  # Retrieve email
+    password = request.form.get("password")  # Retrieve password
 
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
-        user = cursor.fetchone()
-        cursor.close()
+    # Check database for user
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+    user = cursor.fetchone()
+    cursor.close()
 
-        if user :
-            session["loggedin"] = True
-            session["Id"] = user["Id"]  # Ensure database column is named `id`
-            session["name"] = user["name"]
-            return redirect(url_for("index"))
-        else:
-            
-            return render_template("login.html", error = "Invalid email or password")
+    # If user exists, verify password
+    if user and bcrypt.check_password_hash(user["password_hash"], password):
+        session["loggedin"] = True
+        session["id"] = user["id"]
+        session["name"] = user["username"]
+        return redirect(url_for("dashboard"))
+    else:
+        return render_template("login.html", error="Invalid email or password")
 
     return render_template("login.html")
 
