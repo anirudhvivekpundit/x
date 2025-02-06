@@ -84,7 +84,7 @@ def index_ht():
 @app.route("/logindata", methods=["GET", "POST"])
 def logindata():
     email = request.form.get("email")
-    password = request.form.get("password")
+    password = request.form.get("password_hash")
 
     if not email or not password:
         return "Email and password are required", 400
